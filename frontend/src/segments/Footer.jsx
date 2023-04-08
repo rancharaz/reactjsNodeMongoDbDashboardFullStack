@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-
-const Nav = () => {
+const Footer = () => {
     return (
-        <nav className='w-full bg-black h-14 flex'>
+
+        <nav className='w-full bg-black h-14 flex absolute bottom-0'>
             <div className="mx-auto container text-center justify-center items-center flex">
                 <div className="logo text-white">
                     <Link to="/" className='pr-4' >LOGO</Link>
@@ -19,7 +19,8 @@ const Nav = () => {
                 </ul>
             </div>
         </nav>
+
     )
 }
 
-export default Nav
+export default Footer
