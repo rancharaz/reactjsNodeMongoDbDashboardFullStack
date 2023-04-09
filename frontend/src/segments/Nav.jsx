@@ -15,6 +15,7 @@ const Nav = () => {
                     <Link to="/update" className='pr-4 hover:text-gray-500 transition-all' >Update Product</Link>
                     <Link to="/update" className='pr-4 hover:text-gray-500 transition-all' >Logout</Link>
                     <Link to="/profile" className='pr-4 hover:text-gray-500 transition-all' >Profile</Link>
+                    <Link to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Sign up</Link>
 
                 </ul>
             </div>
