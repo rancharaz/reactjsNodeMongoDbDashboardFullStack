@@ -10,11 +10,11 @@ const Footer = () => {
                     <Link to="/" className='pr-4' >LOGO</Link>
                 </div>
                 <ul className='text-white p-3.5 '>
-                    <Link to="/" className='pr-4 hover:text-gray-500 transition-all' >Product</Link>
-                    <Link to="/add" className='pr-4 hover:text-gray-500 transition-all' >Add Product</Link>
-                    <Link to="/update" className='pr-4 hover:text-gray-500 transition-all' >Update Product</Link>
-                    <Link to="/update" className='pr-4 hover:text-gray-500 transition-all' >Logout</Link>
+                    <Link to="/add-products" className='pr-4 hover:text-gray-500 transition-all' >Add Product</Link>
+                    <Link to="/update-products" className='pr-4 hover:text-gray-500 transition-all' >Update Product</Link>
+                    <Link to="/logout" className='pr-4 hover:text-gray-500 transition-all' >Logout</Link>
                     <Link to="/profile" className='pr-4 hover:text-gray-500 transition-all' >Profile</Link>
+                    <Link to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Sign up</Link>
 
                 </ul>
             </div>

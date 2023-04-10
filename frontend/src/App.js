@@ -4,6 +4,7 @@ import Nav from './segments/Nav';
 import Product from './component/Product';
 import Footer from './segments/Footer';
 import Signup from './component/Signup';
+import PrivateComponent from './component/PrivateComponent';
 
 function App() {
   return (
@@ -12,11 +13,16 @@ function App() {
         <Nav />
 
         <Routes>
-          <Route path='/product' element={<Product />} />
-          <Route path='/product' element={<Product />} />
-          <Route path='/product' element={<Product />} />
-          <Route path='/product' element={<Product />} />
-          <Route path='/product' element={<Product />} />
+
+          <Route element={<PrivateComponent />}> {/* insert into privateRouting */}
+            {/* routing for pages */}
+            <Route path='/product' element={<Product />} />
+            <Route path='/add-products' element={<h1>Add products</h1>} />
+            <Route path='/update-products' element={<h1>Update products</h1>} />
+            <Route path='/logout' element={<h1>Logout</h1>} />
+            <Route path='/profile' element={<h1>Profile</h1>} />
+          </Route>
+
           <Route path='/sign-up' element={<Signup />} />
 
         </Routes>
