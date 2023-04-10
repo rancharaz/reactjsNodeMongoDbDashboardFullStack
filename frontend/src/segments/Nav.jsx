@@ -29,6 +29,7 @@ const Nav = () => {
                     {
                         auth ? <Link onClick={logout} to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Logout</Link> : <Link to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Sign up</Link>
                     }
+                    <Link to="/login" className='pr-4 hover:text-gray-500 transition-all' >Login</Link>
 
 
                 </ul>

@@ -5,6 +5,7 @@ import Product from './component/Product';
 import Footer from './segments/Footer';
 import Signup from './component/Signup';
 import PrivateComponent from './component/PrivateComponent';
+import Login from './component/Login';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           </Route>
 
           <Route path='/sign-up' element={<Signup />} />
-
+          <Route path="/login" element={<Login />} />
         </Routes>
         <Footer />
       </Router>
