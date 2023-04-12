@@ -1,14 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
     /* getting data and put in useState */
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
+    const navigate = useNavigate();/* navigate to page hook */
 
-    /* post login */
-    const handleLogin = () => {
+    /* if user true navigate to index / login won't show once login */
+    useEffect(() => {
+        const auth = localStorage.getItem('user');
+        if (auth) {
+            navigate('/')
+        }
+    }, [])
+
+
+    /* post login to api url */
+    const handleLogin = async () => {
         console.log(email, password)
+
+        let result = await fetch("http://localhost:8080/login", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Content-Type, Authorization',
+                'Access-Control-Allow-Methods': '*',
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+        result = await result.json();
+        console.log(result);
+        /* if user true from backend navigate to /   */
+        if (result.name) {
+            localStorage.setItem("user", JSON.stringify(result));
+            navigate("/")
+
+        } else {
+            alert('please enter correct details')
+        }
     }
 
     return (

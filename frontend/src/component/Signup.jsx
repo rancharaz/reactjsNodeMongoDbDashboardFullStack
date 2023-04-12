@@ -23,7 +23,7 @@ const Signup = () => {
     const handleInput = async (e) => {
         const users = { name, email, password }/* destructure the data */
 
-        fetch('http://localhost:8080/register', {
+        await fetch('http://localhost:8080/register', {
             method: "POST",
             mode: 'cors',
             headers: {

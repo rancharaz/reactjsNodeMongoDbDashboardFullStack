@@ -2,8 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 require('./db/config')
-const User = require('./db/User')
-
+const User = require('./model/User')/* import model */
+const Product = require('./model/Product')
 
 const app = express();
 
@@ -53,8 +53,15 @@ app.post('/login', async (req, res) => {
 
 
 })
-
-
+/* route for addProducts */
+app.post('/add-product', async (req, res) => {
+    /* new data add from form/postman */
+    let product = new Product(req.body);
+    /*  save function*/
+    let result = await product.save();
+    /* send the data */
+    res.send(result)
+})
 
 /* 
 const PORT = 5001; */
