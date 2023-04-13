@@ -27,7 +27,7 @@ const Nav = () => {
                 {
                     auth ? <ul className='text-white p-3.5 '>
 
-                        <Link to="/" className='pr-4 hover:text-gray-500 transition-all' >Products</Link>
+                        <Link to="/product" className='pr-4 hover:text-gray-500 transition-all' >Products</Link>
                         <Link to="/add-product" className='pr-4 hover:text-gray-500 transition-all' >Add Product</Link>
                         <Link to="/update-products" className='pr-4 hover:text-gray-500 transition-all' >Update Product</Link>
 

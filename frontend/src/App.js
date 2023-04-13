@@ -1,12 +1,12 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Nav from './segments/Nav';
-import Product from './component/Product';
 import Footer from './segments/Footer';
 import Signup from './component/Signup';
 import PrivateComponent from './component/PrivateComponent';
 import Login from './component/Login';
 import AddProduct from './component/AddProduct';
+import ProductList from './component/ProductList';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
 
           <Route element={<PrivateComponent />}> {/* insert into privateRouting */}
             {/* routing for pages */}
-            <Route path='/product' element={<Product />} />
+            <Route path='/product' element={<ProductList />} />
             <Route path='/add-product' element={<AddProduct />} />
             <Route path='/update-products' element={<h1>Update products</h1>} />
             <Route path='/logout' element={<h1>Logout</h1>} />

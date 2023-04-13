@@ -62,6 +62,17 @@ app.post('/add-product', async (req, res) => {
     /* send the data */
     res.send(result)
 })
+/* get all product route */ /* use product model to get products */
+app.get('/products', async (req, res) => {
+    let products = await Product.find();/* all products */
+
+    /* no products in result */
+    if (products.length > 0) {
+        res.send(products)
+    } else {
+        res.send({ result: "No products found" })
+    }
+})
 
 /* 
 const PORT = 5001; */
