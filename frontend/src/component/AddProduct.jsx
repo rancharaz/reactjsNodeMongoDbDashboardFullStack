@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
 
@@ -9,6 +10,8 @@ const AddProduct = () => {
     const [company, setCompany] = useState("")
     /* VALIDATION */
     const [validationError, setValidationError] = useState(false)
+    /* useNavigate to move to other pages */
+    const navigate = useNavigate();
 
     /* function to add Products */
     const addProduct = async () => {
@@ -33,7 +36,8 @@ const AddProduct = () => {
                 },
                 body: JSON.stringify(products)/* add const destructered */
             }).then(() => {
-                alert("Products added")
+                alert("Products added");
+                navigate('/product')
             }).catch(function (error) {
                 console.log(error.message)
             })

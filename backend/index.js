@@ -74,6 +74,37 @@ app.get('/products', async (req, res) => {
     }
 })
 
+/* delete by id method */
+app.delete('/product/:id', async (req, res) => {
+    /*  res.send(req.params.id);  *//* id from db */
+    const result = await Product.deleteOne({ _id: req.params.id }); /* identify id from db to id frontend & delete */
+    res.send(result);/* send delete request */
+})
+
+/* get by id method */
+app.get('/product/:id', async (req, res) => {
+    let result = await Product.findOne({ _id: req.params.id });/* identify id from db to id frontend & update */
+    /* if one found show result else show record not found */
+    if (result) {
+        res.send(result)
+    } else {
+        res.send({ result: "No record found" })
+    }
+})
+/* update product method */
+
+app.put('/product/:id', async (req, res) => {
+    let result = await Product.updateOne(
+        { _id: req.params.id },/* get id */
+        { $set: req.body }/* set is used to update the data/body */
+    )
+    res.send(result)
+})
+
+
+
+
+
 /* 
 const PORT = 5001; */
 
