@@ -37,7 +37,7 @@ const Signup = () => {
 
         }).then(() => {
             console.log("User added");
-            /* store in localStorage */
+            /* store in localStorage FIRST */
             localStorage.setItem("user", JSON.stringify(users));
             /* navigate to homeage */
             navigate('/')
