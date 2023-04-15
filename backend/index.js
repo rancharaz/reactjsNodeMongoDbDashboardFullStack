@@ -5,6 +5,11 @@ require('./db/config')
 const User = require('./model/User')/* import model */
 const Product = require('./model/Product')
 
+const Jwt = require('jsonwebtoken'); /* jwt for auth to have token    */
+const jwtKey = "e-comm";
+
+
+
 const app = express();
 
 /* middleware */
@@ -19,17 +24,26 @@ const corsOptions = {
 app.use(cors(corsOptions))
 /*  */
 
-/* endpoint */
+/* endpoint for register user  */
 app.post('/register', async (req, res) => {
     let user = new User(req.body); /* get data */
     let result = await user.save();/* save user */
     /* remove password  */
     result = result.toObject()
     delete result.password
-    /*  */
-    res.send(result)/* send to db */
+    /* add token to register to result variable  */
+    Jwt.sign({ result }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+        /* if token error */
+        if (err) {
+            res.send({ result: "something went wrong try after two time" })
+        }/* show token */
+        res.send({ result, auth: token }) /* getting the auth token here */
+    })
+    /* res.send(result) send to db */
 })
 
+
+/* endpoint for login user  */
 app.post('/login', async (req, res) => {
     console.log(req.body)
 
@@ -38,9 +52,17 @@ app.post('/login', async (req, res) => {
         /* find only one result */     /* remove password */
         let user = await User.findOne(req.body).select("-password");
 
-        /* if user has any data/value */
+        /* if user has any data/value login*/
         if (user) {
-            res.send(user)
+            /* assign jwt token while login / use user to send jwtkey expires 2hrs */
+            Jwt.sign({ user }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+                /* if token error */
+                if (err) {
+                    res.send({ result: "something went wrong try after two hours" })
+                }/* show token */
+                res.send({ user, auth: token }) /* getting the auth token here */
+            })
+
         } else {
             /* else */
             res.send({ result: "User not found" })
@@ -53,7 +75,7 @@ app.post('/login', async (req, res) => {
 
 
 })
-/* route for addProducts */
+/* endPoint for adding products  */
 app.post('/add-product', async (req, res) => {
     /* new data add from form/postman */
     let product = new Product(req.body);
@@ -62,7 +84,9 @@ app.post('/add-product', async (req, res) => {
     /* send the data */
     res.send(result)
 })
-/* get all product route */ /* use product model to get products */
+
+
+/* endPoint for getting all product route */ /* use product model to get products */
 app.get('/products', async (req, res) => {
     let products = await Product.find();/* all products */
 
@@ -74,14 +98,14 @@ app.get('/products', async (req, res) => {
     }
 })
 
-/* delete by id method */
+/* endPoint to delete by id method */
 app.delete('/product/:id', async (req, res) => {
     /*  res.send(req.params.id);  *//* id from db */
     const result = await Product.deleteOne({ _id: req.params.id }); /* identify id from db to id frontend & delete */
     res.send(result);/* send delete request */
 })
 
-/* get by id method */
+/* endPoint to get by id method */
 app.get('/product/:id', async (req, res) => {
     let result = await Product.findOne({ _id: req.params.id });/* identify id from db to id frontend & update */
     /* if one found show result else show record not found */
@@ -91,7 +115,7 @@ app.get('/product/:id', async (req, res) => {
         res.send({ result: "No record found" })
     }
 })
-/* update product method */
+/* endPoint to update product method */
 
 app.put('/product/:id', async (req, res) => {
     let result = await Product.updateOne(
@@ -101,7 +125,7 @@ app.put('/product/:id', async (req, res) => {
     res.send(result)
 })
 
-/* search by id */ /* search more field '$or' */
+/* endPoint to search by id */ /* search more field '$or' */
 app.get('/search/:key', async (req, res) => {
     let result = await Product.find({
         "$or": [

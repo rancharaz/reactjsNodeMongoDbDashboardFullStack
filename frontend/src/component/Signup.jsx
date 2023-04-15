@@ -21,9 +21,9 @@ const Signup = () => {
 
     /*  function to post data */
     const handleInput = async (e) => {
-        const users = { name, email, password }/* destructure the data */
 
-        await fetch('http://localhost:8080/register', {
+
+        let result = await fetch('http://localhost:8080/register', {
             method: "POST",
             mode: 'cors',
             headers: {
@@ -33,17 +33,19 @@ const Signup = () => {
                 "Content-Type": "application/json"
             },
             /* convert to string */
-            body: JSON.stringify(users)
+            body: JSON.stringify({ name, email, password })
 
-        }).then(() => {
-            console.log("User added");
-            /* store in localStorage FIRST */
-            localStorage.setItem("user", JSON.stringify(users));
-            /* navigate to homeage */
-            navigate('/')
-        }).catch(function (error) {
-            console.log(error.message)
         })
+
+        result = await result.json();/* convert to json */
+        console.log("User added");
+        /* store in localStorage FIRST */
+        localStorage.setItem("user", JSON.stringify(result.result)); /* result -> data added */
+        localStorage.setItem("token", JSON.stringify(result.auth)); /* jwt auth */
+
+        /* navigate to homeage */
+        navigate('/')
+
     }
 
 

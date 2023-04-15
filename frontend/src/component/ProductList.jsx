@@ -10,7 +10,11 @@ const ProductList = () => {
     }, [])
     /* function to get products put in useEffect */
     const getProducts = async () => {
-        const response = await fetch('http://localhost:8080/products');
+        const response = await fetch('http://localhost:8080/products', {
+            headers: {
+                authorization: JSON.parse(localStorage.getItem('token'))/*  */
+            }
+        });
         const allProducts = await response.json()
         setProducts(allProducts)/* function in useState */
     }

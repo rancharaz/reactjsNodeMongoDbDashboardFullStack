@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, json, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import manutd from "../images/manutd.png"
 
 const Nav = () => {
@@ -32,8 +32,8 @@ const Nav = () => {
                         <Link to="/update-products" className='pr-4 hover:text-gray-500 transition-all' >Update Product</Link>
 
                         <Link to="/profile" className='pr-4 hover:text-gray-500 transition-all' >Profile</Link>
-                        <Link onClick={logout} to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Logout - <span className='text-lg text-gray-500 font-bold'>Username: {JSON.parse(auth).name}</span> </Link>
-
+                        <Link onClick={logout} to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Logout - <span className='text-lg text-gray-500 font-bold'>Username: </span> </Link>
+                        ({JSON.parse(auth).name})
                     </ul> :
                         <ul className='text-white p-3.5 '>
                             <Link to="/sign-up" className='pr-4 hover:text-gray-500 transition-all' >Sign up</Link>

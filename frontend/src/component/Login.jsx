@@ -35,8 +35,11 @@ const Login = () => {
         result = await result.json();
         console.log(result);
         /* if user true from backend navigate to /   */
-        if (result.name) {
-            localStorage.setItem("user", JSON.stringify(result));
+        /* everything is in the user.auth */
+        if (result.auth) {
+            localStorage.setItem("user", JSON.stringify(result.user));/* get user email and password */
+            localStorage.setItem("token", JSON.stringify(result.auth));/* get user Jwt */
+
             navigate("/")
 
         } else {
