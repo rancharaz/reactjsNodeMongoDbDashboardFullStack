@@ -76,7 +76,7 @@ app.post('/login', async (req, res) => {
 
 })
 /* endPoint for adding products  */
-app.post('/add-product', async (req, res) => {
+app.post('/add-product', verifyToken, async (req, res) => {
     /* new data add from form/postman */
     let product = new Product(req.body);
     /*  save function*/
@@ -87,7 +87,7 @@ app.post('/add-product', async (req, res) => {
 
 
 /* endPoint for getting all product route */ /* use product model to get products */
-app.get('/products', async (req, res) => {
+app.get('/products', verifyToken, async (req, res) => {
     let products = await Product.find();/* all products */
 
     /* no products in result */
@@ -99,14 +99,14 @@ app.get('/products', async (req, res) => {
 })
 
 /* endPoint to delete by id method */
-app.delete('/product/:id', async (req, res) => {
+app.delete('/product/:id', verifyToken, async (req, res) => {
     /*  res.send(req.params.id);  *//* id from db */
     const result = await Product.deleteOne({ _id: req.params.id }); /* identify id from db to id frontend & delete */
     res.send(result);/* send delete request */
 })
 
 /* endPoint to get by id method */
-app.get('/product/:id', async (req, res) => {
+app.get('/product/:id', verifyToken, async (req, res) => {
     let result = await Product.findOne({ _id: req.params.id });/* identify id from db to id frontend & update */
     /* if one found show result else show record not found */
     if (result) {
@@ -117,7 +117,7 @@ app.get('/product/:id', async (req, res) => {
 })
 /* endPoint to update product method */
 
-app.put('/product/:id', async (req, res) => {
+app.put('/product/:id', verifyToken, async (req, res) => {
     let result = await Product.updateOne(
         { _id: req.params.id },/* get id */
         { $set: req.body }/* set is used to update the data/body */
@@ -126,7 +126,7 @@ app.put('/product/:id', async (req, res) => {
 })
 
 /* endPoint to search by id */ /* search more field '$or' */
-app.get('/search/:key', async (req, res) => {
+app.get('/search/:key', verifyToken, async (req, res) => {
     let result = await Product.find({
         "$or": [
             { name: { $regex: req.params.key } },
@@ -136,6 +136,37 @@ app.get('/search/:key', async (req, res) => {
     })
     res.send(result)
 })
+
+
+
+
+/* middleware to authenticate JWT back into backend */
+/* next is use when the function middleware is finished it moves to the actual function */
+function verifyToken(req, res, next) {
+
+    let token = req.headers['authorization']/* getting token from headers */
+    if (token) {
+        token = token.split(' ')[1];/* split from bearer *//* bearer is from position 0, removed, token position 1 showed */
+        /*  console.log("middleware called if", token) */
+        /* Verify token */
+        Jwt.verify(token, jwtKey, (err, valid) => {
+            if (err) {
+                res.status(401).send({ response: 'Please provide valid token' })/* token not good in header */
+            } else {
+                next();/* if good move to next part */
+            }
+        })
+
+    } else {
+        /* else not token */
+        res.status(403).send({ response: 'Please add token with header' })/* token not found in header */
+    }
+    /*     console.log("test token is : " + token)
+     */
+}
+
+
+
 
 
 /* 

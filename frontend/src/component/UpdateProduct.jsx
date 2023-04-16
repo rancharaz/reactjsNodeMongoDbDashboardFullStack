@@ -21,7 +21,11 @@ const UpdateProduct = () => {
 
     const getProducts = async () => {
 
-        let result = await fetch(`http://localhost:8080/product/${params.id}`);/* get by params id */
+        let result = await fetch(`http://localhost:8080/product/${params.id}`, {
+            headers: {
+                authorization: `brearer ${JSON.parse(localStorage.getItem('token'))}`/* adding bearer to token to adjust to backend */
+            }
+        });/* get by params id */
         result = await result.json(); /* Resolve as promise  store all data in in result */
         /*    console.table(result); */
         setName(result.name)/* add result.name in parameter to setName for it to appear as value in the input field */
@@ -36,7 +40,10 @@ const UpdateProduct = () => {
         let result = await fetch(`http://localhost:8080/product/${params.id}`, {
             method: "PUT",
             body: JSON.stringify(data),
+
             headers: {
+                /* adding bearer to token to adjust to backend */
+                authorization: `brearer ${JSON.parse(localStorage.getItem('token'))}`,
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Content-Type, Authorization',
                 'Access-Control-Allow-Methods': '*',

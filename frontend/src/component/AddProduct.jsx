@@ -28,7 +28,10 @@ const AddProduct = () => {
             await fetch('http://localhost:8080/add-product', {
                 method: "POST",
                 mode: 'cors',
+
                 headers: {
+                    /* adding bearer to token to adjust/synchronize to backend */
+                    authorization: `brearer ${JSON.parse(localStorage.getItem('token'))}`,
                     'Access-Control-Allow-Origin': '*',
                     'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Content-Type, Authorization',
                     'Access-Control-Allow-Methods': '*',

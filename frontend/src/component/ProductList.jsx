@@ -12,7 +12,7 @@ const ProductList = () => {
     const getProducts = async () => {
         const response = await fetch('http://localhost:8080/products', {
             headers: {
-                authorization: JSON.parse(localStorage.getItem('token'))/*  */
+                authorization: `brearer ${JSON.parse(localStorage.getItem('token'))}`/* adding bearer to token to adjust to backend */
             }
         });
         const allProducts = await response.json()
@@ -23,6 +23,9 @@ const ProductList = () => {
     const deleteProduct = async (id) => {
         /* fetch with method delete */
         await fetch(`http://localhost:8080/product/${id}`, {
+            headers: {
+                authorization: `brearer ${JSON.parse(localStorage.getItem('token'))}`/* adding bearer to token to adjust to backend */
+            },
             method: "DELETE"
         }).then(() => {
             alert('Product deleted');
@@ -37,7 +40,11 @@ const ProductList = () => {
         let key = e.target.value;
         /* if value inside input as key show function for search or else show products */
         if (key) {
-            let result = await fetch(`http://localhost:8080/search/${key}`);
+            let result = await fetch(`http://localhost:8080/search/${key}`, {
+                headers: {
+                    authorization: `brearer ${JSON.parse(localStorage.getItem('token'))}`/* adding bearer to token to adjust to backend */
+                }
+            });
             result = await result.json();
             setProducts(result)
         } else {
